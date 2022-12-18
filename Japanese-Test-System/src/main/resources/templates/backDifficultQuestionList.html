@@ -1,0 +1,70 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<head>
+<meta charset="UTF-8" />
+<title>日文考古題 - 新增困難題型</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+  <form th:action="@{/backDifficultQuestion}" method="get">
+      <table style="width: 90%" id="tblSpace">
+			<tr>
+				<td colspan="2" height="130px">
+					<h1>後台 - 困難題型管理</h1>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<div id="topDiv">
+							<p>
+								<span>問題標題</span>&emsp;&nbsp; 
+								<input type="text" th:name="title" ID="txtkeyword" placeholder="請輸入搜尋文字" />
+								<button type="submit" ID="btnSearch" th:name="search" class="btn btn-primary">搜尋</button>
+							</p>
+						</div>
+						<div id="imgDiv">
+						    <a th:href="@{/backAddDifficultQuestion}" class="btn btn-secondary mb-3">新增</a>
+							<button ID="btnDelete" type="submit" th:name="delete" class="btn btn-danger mb-3" onclick="ConfirmDelete()">刪除</button>
+						</div>
+					</div>
+					<div>
+						<table class="table table-success table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>#</th>
+								<th>問題</th>
+								<th>等級</th>
+								<th>建立時間</th>
+							</tr>
+					    </thead>
+					    <tbody>
+							<tr th:each="difficultQues,status :${difficultQuess}">
+								<td>
+								   <input type="checkbox" ID="ckbDel" th:value="${difficultQues.difficultQuestionId}" th:name="Id" />
+								</td>
+								<td>
+								   <label ID="lblNumber" th:text="${status.count}"></label>
+								</td>
+								<td><a th:href="@{/backAddDifficultQuestion(ID=${difficultQues.difficultQuestionId})}"> 
+								    <label ID="lblQueryName" th:text="${difficultQues.difficultQuestionTitle}"></label> </a>
+							    </td>
+							    <td>
+							       <label ID="oftenuseType" th:text="${difficultQues.difficultQuestionLevel}"></label>
+							    </td>
+								<td>
+								    <label ID="lblCreateTime" th:text="${#dates.format(difficultQues.createDate, 'yyyy-MM-dd')}"></label>
+							    </td>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+  </form>
+</body>
